@@ -2,3 +2,4 @@
 ## Author
 Vo Duc Minh
 ## Exercise
+Demo Timer for Lab02
