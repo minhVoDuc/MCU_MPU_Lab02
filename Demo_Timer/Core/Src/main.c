@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "software_timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,7 +36,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define INDEX 0
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -94,10 +94,15 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  setTimer(INDEX, 200);
   while (1)
   {
     /* USER CODE END WHILE */
-
+	if (timer_flag[INDEX] == 1){
+		setTimer(INDEX, 200);
+		//TODO
+		HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
+	}
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -208,16 +213,17 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-int counter = 100;
+//int counter = 100;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	if (counter > 0){
-		counter--;
-		if (counter <= 0){
-			counter = 100;
-			//TODO
-			HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
-		}
-	}
+//	if (counter > 0){
+//		counter--;
+//		if (counter <= 0){
+//			counter = 100;
+//			//TODO
+//			HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
+//		}
+//	}
+	timerRun(INDEX); //use timer_flag[0]
 }
 /* USER CODE END 4 */
 
