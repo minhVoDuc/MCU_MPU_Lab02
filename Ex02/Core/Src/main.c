@@ -331,7 +331,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 			count = 50;
 			//TODO
 			configLedSystem(state);
-			state = !state;
+			state = (state +1) % 4;
 		}
 	}
 
