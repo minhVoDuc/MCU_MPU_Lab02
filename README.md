@@ -2,3 +2,4 @@
 ## Author
 Vo Duc Minh
 ## Exercise
+01 - Display 2 7seg-leds with timer
