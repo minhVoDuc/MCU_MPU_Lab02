@@ -2,3 +2,4 @@
 ## Author
 Vo Duc Minh
 ## Exercise
+04 - Display 4 7-seg leds with total 1Hz frequency timer
