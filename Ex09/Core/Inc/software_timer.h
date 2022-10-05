@@ -8,8 +8,6 @@
 #ifndef INC_SOFTWARE_TIMER_H_
 #define INC_SOFTWARE_TIMER_H_
 
-#define TIMECYCLE 10
-
 extern int timer0_flag;
 extern int timer1_flag;
 

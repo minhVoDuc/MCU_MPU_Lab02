@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "software_timer.h"
+#include "matrix.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,12 +57,7 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void updateLedMatrix(int index);
-const int MAX_LED_MATRIX = 8;
-int index_led_matrix = 0;
-int col_index = 0;
-uint8_t matrix_buffer[8] = {0x01, 0x02, 0x03, 0x04,
-							0x05, 0x06, 0x07, 0x08};
+
 /* USER CODE END 0 */
 
 /**
@@ -94,8 +90,10 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  setTimer0(1000);
-  setTimer1(100);
+  HAL_TIM_Base_Start_IT(&htim2);
+  setTimer0(100);
+  setTimer1(5);
+  int index_led_matrix = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -106,15 +104,15 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	if (timer0_flag == 1){ //Toggle LED RED PA5
-		setTimer0(1000);
+		setTimer0(100);
 		HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
 	}
 
 	if (timer1_flag == 1){
-		setTimer1(100);
+		setTimer1(5);
 		//TODO
-		updateLedMatrix(col_index);
-		col_index = (col_index + 1) % MAX_LED_MATRIX;
+		updateLedMatrix(index_led_matrix);
+		index_led_matrix = (index_led_matrix + 1) % MAX_LED_MATRIX;
 	}
   }
   /* USER CODE END 3 */
@@ -176,7 +174,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 7999;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 9;
+  htim2.Init.Period = 1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -217,13 +215,13 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, ENM0_Pin|ENM1_Pin|DOT_Pin|LED_RED_Pin
                           |EN0_Pin|EN1_Pin|EN2_Pin|EN3_Pin
                           |ENM2_Pin|ENM3_Pin|ENM4_Pin|ENM5_Pin
-                          |ENM6_Pin|ENM7_Pin, GPIO_PIN_RESET);
+                          |ENM6_Pin|ENM7_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, SEG_A_Pin|SEG_B_Pin|SEG_C_Pin|ROW_2_Pin
                           |ROW_3_Pin|ROW_4_Pin|ROW_5_Pin|ROW_6_Pin
                           |ROW_7_Pin|SEG_D_Pin|SEG_E_Pin|SEG_F_Pin
-                          |SEG_G_Pin|ROW_0_Pin|ROW_1_Pin, GPIO_PIN_RESET);
+                          |SEG_G_Pin|ROW_0_Pin|ROW_1_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : ENM0_Pin ENM1_Pin DOT_Pin LED_RED_Pin
                            EN0_Pin EN1_Pin EN2_Pin EN3_Pin
@@ -254,29 +252,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void updateLedMatrix(int index){
-	switch(index){
-		case 0:
-			break;
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		case 5:
-			break;
-		case 6:
-			break;
-		case 7:
-			break;
-		default:
-			break;
-	}
-}
-
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	timerRun();
 }
