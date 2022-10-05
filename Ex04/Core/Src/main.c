@@ -324,12 +324,13 @@ void update7Seg(int index){
 	}
 }
 
-int count = 25, count_led = 100;
-int state = 0; //0: Led 0 ON - 1: Led 1 ON
+int count = 25; //each 7seg led freq = 4Hz
+int count_led = 100; //dot led freq = 1Hz
+int state = 0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if (count > 0){
 		count--;
-		if (count <= 0){
+		if (count <= 0){ //enable relevant 7seg led
 			count = 25;
 			//TODO
 			update7Seg(index_led);
@@ -339,7 +340,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
 	if (count_led > 0){
 		count_led--;
-		if (count_led <= 0){
+		if (count_led <= 0){ //toggle dot led
 			count_led = 100;
 			//TODO
 			HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
