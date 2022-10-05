@@ -10,8 +10,8 @@
 uint8_t matrix_buffer[8] = {0xFC, 0x32, 0x31, 0x31,
 							0x33, 0x37, 0xFE, 0xFC};
 
-void getBuffer(uint8_t buffer){
-	HAL_GPIO_WritePin(GPIOB, ROW_0_Pin, !(buffer&1));
+void getBuffer(uint8_t buffer){ // assign matrix_buffer to row pin
+	HAL_GPIO_WritePin(GPIOB, ROW_0_Pin, !(buffer&1)); //LSB of buffer equal to row 0
 	buffer = buffer >> 1;
 	HAL_GPIO_WritePin(GPIOB, ROW_1_Pin, !(buffer&1));
 	buffer = buffer >> 1;
@@ -25,11 +25,10 @@ void getBuffer(uint8_t buffer){
 	buffer = buffer >> 1;
 	HAL_GPIO_WritePin(GPIOB, ROW_6_Pin, !(buffer&1));
 	buffer = buffer >> 1;
-	HAL_GPIO_WritePin(GPIOB, ROW_7_Pin, !(buffer&1));
-	buffer = buffer >> 1;
+	HAL_GPIO_WritePin(GPIOB, ROW_7_Pin, !(buffer&1)); //MSB of buffer equal to row 7
 }
 
-void updateLedMatrix(int index){
+void updateLedMatrix(int index){ // Enable column in matrix led
 	switch(index){
 		case 0:
 			clearEnable();
@@ -69,7 +68,7 @@ void updateLedMatrix(int index){
 	getBuffer(matrix_buffer[index]);
 }
 
-void clearEnable(){
+void clearEnable(){ //clear all enable for column matrix led
 	HAL_GPIO_WritePin(GPIOA, ENM0_Pin | ENM1_Pin | ENM2_Pin | ENM3_Pin |
 			ENM4_Pin | ENM5_Pin | ENM6_Pin | ENM7_Pin, 1);
 }

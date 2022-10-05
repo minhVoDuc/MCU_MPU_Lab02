@@ -91,8 +91,8 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
-  setTimer0(100);
-  setTimer1(5);
+  setTimer0(500); //set timer for led red PA5 blinks - 500*(1/500Hz) = 1000ms
+  setTimer1(5); //set timer for led matrix  - 5*(1/500Hz) = 10ms
   int index_led_matrix = 0;
   /* USER CODE END 2 */
 
@@ -108,11 +108,11 @@ int main(void)
 		HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
 	}
 
-	if (timer1_flag == 1){
+	if (timer1_flag == 1){ //Display each column of matrix led
 		setTimer1(5);
 		//TODO
 		updateLedMatrix(index_led_matrix);
-		index_led_matrix = (index_led_matrix + 1) % MAX_LED_MATRIX;
+		index_led_matrix = (index_led_matrix + 1) % MAX_LED_MATRIX; //to fix range of index_led_matrix in [0..7]
 	}
   }
   /* USER CODE END 3 */
