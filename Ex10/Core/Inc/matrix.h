@@ -9,11 +9,11 @@
 #define INC_MATRIX_H_
 
 #define MAX_LED_MATRIX 8
-#define MAX_LED_BUFFER 56
+#define MAX_CHARACTER 7
 
 #include "main.h"
 
-uint8_t matrix_buffer[MAX_LED_BUFFER];
+uint8_t matrix_buffer[MAX_CHARACTER][8];
 int shifter;
 int counter;
 
