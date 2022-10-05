@@ -1,3 +1,3 @@
-matrix.c:21:6:getBuffer	16	static
-matrix.c:39:6:updateLedMatrix	16	static
-matrix.c:81:6:clearEnable	8	static
+matrix.c:19:6:getBuffer	16	static
+matrix.c:37:6:updateLedMatrix	16	static
+matrix.c:79:6:clearEnable	8	static

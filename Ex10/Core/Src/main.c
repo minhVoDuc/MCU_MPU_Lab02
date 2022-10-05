@@ -92,7 +92,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
   setTimer0(500); //set timer for led red PA5 blinks - 500*(1/500Hz) = 1000ms
-  setTimer1(10); //set timer for led matrix  - 10*(1/500Hz) = 20ms
+  setTimer1(5); //set timer for led matrix  - 10*(1/500Hz) = 20ms
   int index_led_matrix = 0;
   /* USER CODE END 2 */
 
@@ -109,7 +109,7 @@ int main(void)
 	}
 
 	if (timer1_flag == 1){ //Display each column of matrix led
-		setTimer1(10);
+		setTimer1(5);
 		//TODO
 		updateLedMatrix(index_led_matrix);
 		index_led_matrix = (index_led_matrix + 1) % MAX_LED_MATRIX; //to fix range of index_led_matrix in [0..7]
