@@ -1,0 +1,3 @@
+matrix.c:20:6:getBuffer	16	static
+matrix.c:38:6:updateLedMatrix	16	static
+matrix.c:80:6:clearEnable	8	static

@@ -1,0 +1,2 @@
+led7seg.c:10:6:display7Seg	16	static
+led7seg.c:77:6:update7Seg	16	static
