@@ -296,25 +296,25 @@ int index_led = 0;
 int led_buffer[4] = {1, 2, 3, 4};
 void update7Seg(int index){
 	switch (index){
-		case 0:{
+		case 0:{ //enable 7-seg led 0, display led_buffer[0]
 			HAL_GPIO_WritePin(GPIOA, EN0_Pin, RESET);
 			HAL_GPIO_WritePin(GPIOA, EN1_Pin | EN2_Pin | EN3_Pin, SET);
 			display7Seg(led_buffer[index]);
 			break;
 		}
-		case 1:{
+		case 1:{ //enable 7-seg led 1, display led_buffer[1]
 			HAL_GPIO_WritePin(GPIOA, EN1_Pin, RESET);
 			HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN2_Pin | EN3_Pin, SET);
 			display7Seg(led_buffer[index]);
 			break;
 		}
-		case 2:{
+		case 2:{ //enable 7-seg led 2, display led_buffer[2]
 			HAL_GPIO_WritePin(GPIOA, EN2_Pin, RESET);
 			HAL_GPIO_WritePin(GPIOA, EN1_Pin | EN0_Pin | EN3_Pin, SET);
 			display7Seg(led_buffer[index]);
 			break;
 		}
-		case 3:{
+		case 3:{ //enable 7-seg led 3, display led_buffer[3]
 			HAL_GPIO_WritePin(GPIOA, EN3_Pin, RESET);
 			HAL_GPIO_WritePin(GPIOA, EN1_Pin | EN2_Pin | EN0_Pin, SET);
 			display7Seg(led_buffer[index]);
@@ -324,16 +324,17 @@ void update7Seg(int index){
 	}
 }
 
-int count = 50, count_led = 100;
+int count = 50; //each 7seg led freq = 2Hz
+int count_led = 100; //PA5 led red freq = 1Hz
 int state = 0; //0: Led 0 ON - 1: Led 1 ON
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if (count > 0){
 		count--;
-		if (count <= 0){
+		if (count <= 0){ //enable relevant 7seg led and config display
 			count = 50;
 			//TODO
 			update7Seg(index_led);
-			index_led = (index_led + 1) % 4;
+			index_led = (index_led + 1) % 4; //limit index in range [0..3]
 		}
 	}
 
