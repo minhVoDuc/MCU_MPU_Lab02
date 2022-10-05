@@ -291,28 +291,28 @@ void display7Seg(int num){
 	}
 }
 
-void configLedSystem(int state){
+void configLedSystem(int state){ //config display for each 7seg led.
 	switch(state){
-		case 0:{
+		case 0:{ //display 1 for 7seg led 0
 			HAL_GPIO_WritePin(GPIOA, EN0_Pin, RESET);
 			HAL_GPIO_WritePin(GPIOA, EN1_Pin | EN2_Pin | EN3_Pin, SET);
 			display7Seg(1);
 			break;
 		}
-		case 1:{
+		case 1:{ //display 2 for 7seg led 1
 			HAL_GPIO_WritePin(GPIOA, EN1_Pin, RESET);
 			HAL_GPIO_WritePin(GPIOA, EN2_Pin | EN3_Pin | EN0_Pin, SET);
 			display7Seg(2);
 			break;
 		}
-		case 2:{
+		case 2:{ //display 3 for 7seg led 2
 			HAL_GPIO_WritePin(GPIOA, EN2_Pin, RESET);
 			HAL_GPIO_WritePin(GPIOA, EN3_Pin | EN0_Pin | EN1_Pin, SET);
 			display7Seg(3);
 			break;
 		}
 
-		case 3:{
+		case 3:{ //display 0 for 7seg led 3
 			HAL_GPIO_WritePin(GPIOA, EN3_Pin, RESET);
 			HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin | EN2_Pin, SET);
 			display7Seg(0);
@@ -322,22 +322,23 @@ void configLedSystem(int state){
 	}
 }
 
-int count = 50, count_led = 100;
+int count = 50; // Each 7seg led frequency: 1/(50*10ms) = 2Hz
+int count_led = 100; // PA5 Led Red and dot led frequency: 1/(100*10ms) = 1Hz
 int state = 0; //0: Led 0 ON [display 1] - 1: Led 1 ON [display 2] - 2: Led 2 ON [display 3] - 3 Led 3 ON [display 0]
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if (count > 0){ // timer for led 7 display system
 		count--;
-		if (count <= 0){
+		if (count <= 0){ //config display for relevant 7-seg led
 			count = 50;
 			//TODO
 			configLedSystem(state);
-			state = (state +1) % 4;
+			state = (state +1) % 4; //limit range of state in [0..3]
 		}
 	}
 
 	if (count_led > 0){ // timer for blinking led red PA5 and dot
 		count_led--;
-		if (count_led <= 0){
+		if (count_led <= 0){ //toggle PA5 red led and dot led
 			count_led = 100;
 			//TODO
 			HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
