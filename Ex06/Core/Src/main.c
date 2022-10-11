@@ -113,7 +113,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim2);
   int trigger = 0;
   updateClockBuffer();
-  setTimer0(1000);
+  setTimer0(10);
   /* USER CODE END 2 */
 
   /* Infinite loop */
