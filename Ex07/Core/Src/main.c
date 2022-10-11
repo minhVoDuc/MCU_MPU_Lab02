@@ -123,15 +123,15 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	if (timer0_flag == 1){
-		setTimer0(1000);
-		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-		HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
+	if (timer0_flag == 1){  //Trigger after each second
+		setTimer0(1000); //Reset timer
+		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin); //Toggle led red for checking
+		HAL_GPIO_TogglePin(GPIOA, DOT_Pin); //Toggle dot led
 	    second++;
 		if (second >= 60){
 			second = 0;
 			minute++;
-			trigger = 1;
+			trigger = 1; //Trigger when minute changing
 		}
 		if (minute >= 60){
 			minute = 0;
@@ -140,7 +140,7 @@ int main(void)
 		if (hour >= 24){
 			hour = 0;
 		}
-		if (trigger == 1) {
+		if (trigger == 1) { //Only update clock buffer when minute changing
 			updateClockBuffer();
 			trigger = 0;
 		}
